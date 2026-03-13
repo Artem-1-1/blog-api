@@ -2,17 +2,12 @@ import * as postQueries from "../db/post.queries.js";
 
 export const createPost = async (req, res) => {
   const { title, postContent, isPublished } = req.body;
-  // const userId = req.user.id; 
+  const userId = req.user.id; 
 
   try {
-    const fakeID = "1";
-    console.log("Данные получены:", { title, postContent, isPublished, fakeID });
-    // const post = await postQueries.createPost(title, postContent, isPublished, userId);
-    // res.status(201).json(post);
-    res.status(201).json({ 
-      message: "Тест пройден, данные получены!", 
-      received: { title, postContent, isPublished, fakeID } 
-    });
+    console.log("Данные получены:", { title, postContent, isPublished, userId});
+    const post = await postQueries.createPost(title, postContent, isPublished, userId);
+    res.status(201).json(post);
   } catch(err) {
     console.log(err);
     res.status(500).json({ error: "Post not been created" });
@@ -32,9 +27,21 @@ export const getPostById = async(req, res) => {
   res.status(200).json(post)
 }
 
+export const updatePostById = async(req, res) => {
+  const { id: postId } = req.params;
+  const { title, postContent, isPublished } = req.body;
+  const currentUserId = req.user.id;
+  
+  const updatePost = await postQueries.updatePostById(postId, title, postContent, isPublished, currentUserId);
+
+  res.status(200).json(updatePost);
+}
+
 export const deletePostById = async(req, res) => {
   const { id } = req.params;
-  const post = await postQueries.deletePostById(id);
+  const userId = req.user.id;
+  
+  const post = await postQueries.deletePostById(id, userId);
 
   res.status(200).json(post)
 }

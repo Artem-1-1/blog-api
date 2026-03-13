@@ -9,10 +9,7 @@ router.get("/:id", posts.getPostById);
 
 router.post("/new", posts.createPost);
 
-router.patch("/:id", (req, res) => {
-  const { id } = req.params;
-  res.json({ message: `UPDATE blog article with id ${id}`});
-})
+router.patch("/:id", posts.updatePostById);
 
 router.delete("/:id", posts.deletePostById);
 

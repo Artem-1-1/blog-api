@@ -27,6 +27,8 @@ model Post {
   updatedAt   DateTime  @updatedAt
   isPublished Boolean   @default(false)
   comments    Comment[]
+
+  @@unique([id, userId])
 }
 
 model Comment {
@@ -38,9 +40,11 @@ model Comment {
   updatedAt   DateTime @updatedAt
   post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId      String
+
+  @@unique([id, userId])
 }
 
 enum Role {
   USER
-  ADMIN
+  AUTHOR
 }

@@ -39,10 +39,24 @@ export const getDraftPostsById = async(currentUserId) => {
   })
 }
 
+//UPDATE
+export const updatePostById = async(postId, title, postContent, isPublished, currentUserId) => {
+  return prisma.post.update({
+    where: {
+      id: postId,
+      userId: currentUserId,
+    },
+    data : { title, postContent, isPublished }
+  }) 
+}
+
 //DELETE
-export const deletePostById = async(id) => {
+export const deletePostById = async(postId, userId) => {
   return prisma.post.delete({
-    where: { id }
+    where: {
+      id: postId,
+      userId: userId
+     }
   })
 }
 
