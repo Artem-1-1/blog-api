@@ -1,5 +1,12 @@
 import prisma from "./pool.js"
 
+//CREATE
+export const createPost = async(title, postContent, isPublished, userId) => {
+  return prisma.post.create({
+    data: {title, postContent, isPublished, userId}
+  })
+}
+
 //READ
 export const getPostById = async(id) => {
   return prisma.post.findUnique({

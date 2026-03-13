@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home/Home';
+import CreatePost from "./pages/CreatePost/CreatePost"
 import Navbar from './components/Navbar'; 
 
 function App() {
@@ -15,6 +16,10 @@ function App() {
           <Route
            path='/'
            element={<Home />}
+          />
+          <Route
+           path='/new'
+           element={<CreatePost />}
           />
         </Routes>
       </div>

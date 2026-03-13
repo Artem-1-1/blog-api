@@ -7,15 +7,12 @@ router.get("/", posts.getAllPosts);
 
 router.get("/:id", posts.getPostById);
 
-router.post("/", (req, res) => {
-  res.json({ message: "POST a new blog article"});
-})
+router.post("/new", posts.createPost);
 
 router.patch("/:id", (req, res) => {
   const { id } = req.params;
   res.json({ message: `UPDATE blog article with id ${id}`});
 })
-
 
 router.delete("/:id", posts.deletePostById);
 
