@@ -1,9 +1,9 @@
 import prisma from "./pool.js"
 
 //CREATE
-export const createUser = async(username, password) => {
+export const createUser = async(username, password, role) => {
   return prisma.user.create({
-    data: { username, password }
+    data: { username, password, role: role || undefined  }
   })
 }
 
@@ -16,6 +16,6 @@ export const getUserById = async (id) => {
 
 export const getUserByUsername = async(username) => {
   return prisma.user.findUnique({
-    where: {username}
+    where: { username }
   })
 }

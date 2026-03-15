@@ -24,10 +24,15 @@ export const userValidateSignUp = [
   body("confirmPassword")
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error("Password do not match");
+        throw new Error("Passwords do not match");
       }
       return true;
-    })
+    }),
+
+  body("role")
+  .optional()
+  .toUpperCase()
+  .isIn(["USER", "AUTHOR"])  
 ]
 
 export const userValidateLogIn = [
@@ -39,7 +44,4 @@ export const userValidateLogIn = [
   body("password")
     .trim()
     .notEmpty().withMessage("Password must be not empty")
-    .matches(/[A-Z]/).withMessage("Password must contain at least one uppercase letter")
-    .matches(/[0-9]/).withMessage("Password must contain at least one number")
-    .isLength({ min: 8 }).withMessage("Password must have at least 8 symbols")
 ]
