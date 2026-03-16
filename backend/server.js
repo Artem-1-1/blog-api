@@ -1,5 +1,5 @@
 import express from "express";
-import authorRoutes from "./routes/author.js";
+import postsRoutes from "./routes/posts.js";
 import userRoutes from "./routes/user.js";
 import cors from "cors";
 
@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use("/api/posts", authorRoutes);
+app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
 
 app.listen(3000, console.log("Start server on Port 3000"));

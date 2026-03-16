@@ -1,0 +1,66 @@
+.header a{
+  text-decoration: none;
+  color: #333;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  gap: 20px; 
+}
+
+.dropdown {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px); 
+  border: 1px solid #BC96E6;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  min-width: 150px;
+  z-index: 10;
+}
+
+.menu a {
+  padding: 10px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid black;
+}
+
+.menu a:last-child {
+  border-bottom: none;
+}
+
+.rightGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logout {
+  background: #fff;
+  color: #8b5cf6;
+  border: 2px solid #8b5cf6;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.username {
+  font-weight: 600;
+  cursor: pointer;
+  text-shadow: .1em .1em .2em #BC96E6;
+}
