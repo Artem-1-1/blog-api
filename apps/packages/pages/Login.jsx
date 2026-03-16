@@ -1,15 +1,20 @@
 import { useState } from "react"
+import { useLogin } from "../hooks/useLogin"
+import styles from "../styles/form.module.css"
 
-const Login = () => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    await login(username, password);
   }
 
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form className={styles.login} onSubmit={handleSubmit}>
       <h3>Log In</h3>
 
       <label>Username</label>
@@ -24,9 +29,8 @@ const Login = () => {
       value={password}
       required />
 
-      <button>Log in</button>
+      <button disabled={isLoading}>Log in</button>
+      {error && <div className="error">{error}</div>}
     </form>
   )
 }
-
-export default Login;

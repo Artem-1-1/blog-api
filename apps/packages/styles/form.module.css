@@ -1,0 +1,57 @@
+:root {
+  --error: #e7195a;
+}
+
+.signup,
+.login {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem
+}
+
+.signup h3, 
+.login h3 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.signup label, 
+.login label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: -10px;
+}
+
+.signup input, 
+.signup select,
+.login input {
+  padding: 12px 16px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  outline: none;
+  background-color: #f9fafb;
+}
+
+.signup select {
+  cursor: pointer;
+}
+
+.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--error);
+}
