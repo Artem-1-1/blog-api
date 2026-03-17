@@ -19,7 +19,7 @@ export const Signup = () => {
       return;
     }
     
-    await signup(username, password, role)
+    await signup(username, password, confirmPassword, role)
   }  
 
   const handleChange = (e) => {

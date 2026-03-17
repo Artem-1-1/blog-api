@@ -1,13 +1,18 @@
 import { useEffect } from "react";
 import { usePostsContext } from "../../hooks/usePostsContext"
-import PostDetails from "../../components/PostDetails";
+import { useAuthContext } from "@blog-api/packages"
+import PostDetails from "../../components/PostDetails/PostDetails";
 
 const Home = () => {
   const { posts, dispatch } = usePostsContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch("http://localhost:3000/api/posts")
+      const response = await fetch("http://localhost:3000/api/posts", {
+        headers: {'Authorization': `Bearer ${user.token}`},
+      })
+
       const json = await response.json()
 
       if (response.ok) {
@@ -15,8 +20,11 @@ const Home = () => {
       }
     }
 
-    fetchPosts()
-  }, [dispatch])
+    if (user.token) {
+      fetchPosts()
+    }
+
+  }, [dispatch, user.token])
 
   return (
     <div className="home">

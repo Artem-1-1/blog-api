@@ -26,14 +26,11 @@ export const getAllPublishedPosts = async() => {
   })
 }
 
-export const getDraftPostsById = async(currentUserId) => {
+export const getAllDraftPostsById = async(currentUserId) => {
   return prisma.post.findMany({
     where: { 
       userId: currentUserId, 
       isPublished: false     
-    },
-    include: {
-      user: true
     },
     orderBy: { createdAt: "desc" }
   })

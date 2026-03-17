@@ -1,14 +1,15 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from './pages/Home/Home';
-import CreatePost from "./pages/CreatePost/CreatePost"
+import CreatePost from "./pages/CreatePost/CreatePost";
+import Drafts from './pages/Drafts/Drafts';
 import Navbar from './components/Navbar/Navbar';
-import { Login, Signup } from "@blog-api/packages";
+import { Login, Signup, useAuthContext } from "@blog-api/packages";
 
 function App() {
+  const { user } = useAuthContext()
 
   return (
-    <>
     <div className='App'>
       <BrowserRouter>
       <Navbar />
@@ -16,25 +17,28 @@ function App() {
         <Routes>
           <Route
            path='/'
-           element={<Home />}
+           element={user ? <Home /> : <Navigate to="/login"/>}
           />
           <Route
            path='/new'
-           element={<CreatePost />}
+           element={user ? <CreatePost /> : <Navigate to="/login"/>}
+          />
+          <Route
+           path='/drafts'
+           element={user ? <Drafts /> : <Navigate to="/login"/>}
           />
           <Route
            path='/login'
-           element={<Login />}
+           element={!user ? <Login /> : <Navigate to="/"/>}
           />
           <Route
            path='/signup'
-           element={<Signup />}
+           element={!user ? <Signup /> : <Navigate to="/"/>}
           />
         </Routes>
       </div>
       </BrowserRouter>
     </div> 
-    </>
   )
 }
 

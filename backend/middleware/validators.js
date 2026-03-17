@@ -22,6 +22,7 @@ export const userValidateSignUp = [
     .isLength({ min: 8 }).withMessage("Password must have at least 8 symbols"),
 
   body("confirmPassword")
+    .trim()
     .custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error("Passwords do not match");

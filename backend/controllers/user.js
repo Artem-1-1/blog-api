@@ -13,10 +13,10 @@ export const signUpUser = async(req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await userQueries.createUser(username, hashedPassword, role);
     const token = createToken(user.id, user.role)
-    res.status(201).json({username: user.username,role: user.role, token})
+    res.status(201).json({username: user.username,role: user.role, token, id: user.id})
   } catch(error) {
     console.log(error)
-    res.status(500).json({ error: 'Something went wrong on our side' });
+    res.status(500).json({ error: error });
   }
 }
 
@@ -36,7 +36,7 @@ export const logInUser = async(req, res) => {
     }
 
     const token = createToken(user.id, user.role); 
-    res.json({username: user.username, role: user.role, token})
+    res.json({username: user.username, role: user.role, token, id: user.id})
   } catch(error) {
     console.log(error)
     res.status(500).json({ error: 'Something went wrong on our side' });

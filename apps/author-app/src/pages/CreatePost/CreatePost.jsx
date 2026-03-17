@@ -2,7 +2,10 @@ import PostForm from "../../components/PostForm";
 
 const CreatePost = () => {
   return (
-    <PostForm/>
+    <div>
+      <h2>Create New Post</h2>
+      <PostForm/>
+    </div>
   )
 }
 

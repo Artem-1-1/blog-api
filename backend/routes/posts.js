@@ -8,6 +8,8 @@ router.use(requireAuth)
 
 router.get("/", posts.getAllPosts);
 
+router.get("/drafts", authorize('AUTHOR'), posts.getAllDraftPostByUserId)
+
 router.get("/:id", posts.getPostById);
 
 router.post("/new", authorize('AUTHOR'), posts.createPost);

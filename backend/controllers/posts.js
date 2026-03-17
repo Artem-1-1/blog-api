@@ -20,6 +20,13 @@ export const getAllPosts = async (req, res) => {
   res.status(200).json(posts)
 }
 
+export const getAllDraftPostByUserId = async (req, res) => {
+  const currentUserId = req.user.id; 
+  const posts = await postQueries.getAllDraftPostsById(currentUserId);
+
+  res.status(200).json(posts)
+}
+
 export const getPostById = async(req, res) => {
   const { id } = req.params;
   const post = await postQueries.getPostById(id);

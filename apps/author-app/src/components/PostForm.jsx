@@ -1,6 +1,13 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { usePostsContext } from "../hooks/usePostsContext"
+import { useAuthContext } from "@blog-api/packages"
 
 const PostForm = () => {
+  const { dispatch } = usePostsContext()
+  const { user } = useAuthContext()
+  const navigate = useNavigate()
+
   const [title, setTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [isPublished, setIsPublished] = useState(false);
@@ -10,13 +17,19 @@ const PostForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
 
+    if (!user) {
+      setError('You must be logged in')
+      return
+    }
+
     const post = { title, postContent, isPublished }
 
     const response = await fetch("http://localhost:3000/api/posts/new", {
     method: "POST", 
     body: JSON.stringify(post),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      'Authorization': `Bearer ${user.token}`
     }
   })
     const json = await response.json()
@@ -29,7 +42,8 @@ const PostForm = () => {
     setTitle('')
     setPostContent('')
     setIsPublished(false)
-    console.log('new post added:', json)
+    dispatch({type: 'CREATE_WORKOUT', payload: json})
+    navigate('/')
   }
 }
 
