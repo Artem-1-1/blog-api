@@ -1,5 +1,6 @@
 import { usePostsContext } from "../../hooks/usePostsContext"
 import { useAuthContext } from "@blog-api/packages"
+import { Link } from "react-router-dom"
 import style from "./postDetails.module.css"
 
 const PostDetails = ({ post, isDraft=false }) => {
@@ -25,16 +26,35 @@ const PostDetails = ({ post, isDraft=false }) => {
     }
   }
 
+  const createdTime = new Date(post.createdAt).getTime();
+  const updatedTime = new Date(post.updatedAt).getTime();
+  const isUpdated = updatedTime > createdTime;
+  const displayDate = new Date(isUpdated ? post.updatedAt : post.createdAt)
+    .toLocaleDateString('en-GB', { 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit' 
+    });
+
   return (
     <div className={style.postDetails}>
-      <a href={`/post/${post.id}`}>
+      <Link to={`/post/${post.id}`}>
         <h3>{post.title}</h3>
-      </a>
+      </Link>
       <p>{post.postContent}</p>
       {isDraft ? (
         <a href={`/edit/${post.id}`} className={style.readMore}>Edit Draft</a>
       ) : (
-        <a href={`/post/${post.id}`} className={style.readMore}>Read More</a>
+        <div className={style.postMeta}>
+        <span>Author: {post.user?.username}</span>
+        <span> • </span>
+        <span>
+          {isUpdated ? 'Update: ' : 'Published: '}
+          {displayDate}
+        </span>
+      </div>
       )}
       {user && user.id === post.userId && (
         <span className={style.deleteBtn} onClick={handleClick}>

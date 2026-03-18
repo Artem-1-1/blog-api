@@ -60,3 +60,15 @@
   background: #e53e3e;
   color: #ffffff;
 }
+
+.postMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  font-size: 0.85rem; 
+  color: #666; 
+}
+
+.authorName {
+  font-weight: 600;
+}

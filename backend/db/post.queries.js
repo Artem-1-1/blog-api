@@ -12,8 +12,13 @@ export const getPostById = async(id) => {
   return prisma.post.findUnique({
     where: { id },
     include: { 
-      comments: true, 
-      user: true
+      comments: {
+        include: { 
+          user: { select: { username: true } }
+        },
+        orderBy: { createdAt: 'desc' }
+      }, 
+      user: { select: { username: true } }
     }
   })
 }
@@ -21,7 +26,12 @@ export const getPostById = async(id) => {
 export const getAllPublishedPosts = async() => {
   return prisma.post.findMany({
     where: { isPublished: true },
-    include: { user: true },
+    include: { user: {
+        select: {
+          username: true,
+        }
+       }
+      },
     orderBy: { createdAt: "desc" }
   })
 }
