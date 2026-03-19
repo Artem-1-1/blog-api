@@ -1,13 +1,13 @@
 import { usePostsContext } from "../../hooks/usePostsContext"
 import { useAuthContext } from "@blog-api/packages"
 import { Link } from "react-router-dom"
-import style from "./postDetails.module.css"
+import styles from "./postDetails.module.css"
 
 const PostDetails = ({ post, isDraft=false }) => {
   const { dispatch } = usePostsContext()
   const { user } = useAuthContext()
 
-  const handleClick = async () => {
+  const handleClick = async () => {    
     if (!user) {
       return
     }
@@ -28,7 +28,7 @@ const PostDetails = ({ post, isDraft=false }) => {
 
   const createdTime = new Date(post.createdAt).getTime();
   const updatedTime = new Date(post.updatedAt).getTime();
-  const isUpdated = updatedTime > createdTime;
+  const isUpdated = updatedTime - createdTime > 1000;
   const displayDate = new Date(isUpdated ? post.updatedAt : post.createdAt)
     .toLocaleDateString('en-GB', { 
       day: 'numeric', 
@@ -39,15 +39,17 @@ const PostDetails = ({ post, isDraft=false }) => {
     });
 
   return (
-    <div className={style.postDetails}>
-      <Link to={`/post/${post.id}`}>
-        <h3>{post.title}</h3>
-      </Link>
-      <p>{post.postContent}</p>
+    <div className={styles.postDetails}>
       {isDraft ? (
-        <a href={`/edit/${post.id}`} className={style.readMore}>Edit Draft</a>
+        <h3>{post.title}</h3>
       ) : (
-        <div className={style.postMeta}>
+        <Link to={`/post/${post.id}`}>
+          <h3>{post.title}</h3>
+        </Link>
+      )}
+      <p>{post.postContent}</p>
+      {!isDraft && (
+        <div className={styles.postMeta}>
         <span>Author: {post.user?.username}</span>
         <span> • </span>
         <span>
@@ -57,10 +59,15 @@ const PostDetails = ({ post, isDraft=false }) => {
       </div>
       )}
       {user && user.id === post.userId && (
-        <span className={style.deleteBtn} onClick={handleClick}>
+      <div className={styles.actions}>
+        <Link to={`/edit/${post.id}`} className={styles.editBtn}>
+          {isDraft ? 'Edit Draft' : 'Edit Post'}
+        </Link>
+        <button className={styles.deleteBtn} onClick={handleClick}>
           Delete
-        </span>
-      )}
+        </button>
+      </div>
+    )}
     </div>
   )
 }

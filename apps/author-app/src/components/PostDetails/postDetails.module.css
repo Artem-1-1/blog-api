@@ -1,3 +1,8 @@
+:root {
+  --sky-blue: #3182ce;
+  --red: #e53e3e;
+}
+
 .postDetails {
   background: #fff;
   border-radius: 4px;
@@ -40,24 +45,46 @@
   text-decoration: underline;
 }
 
-.deleteBtn {
+.actions {
+  display: flex;
+  gap: 10px;
   position: absolute;
-  top: 50%;
+  top: 20px;
   right: 20px;
-  transform: translateY(-50%); 
-  background: #fff5f5;
-  color: #e53e3e;
+}
+
+.editBtn, .deleteBtn {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  border: 1px solid #feb2b2;
   transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
 
+.editBtn {
+  background: #ebf8ff;
+  color: #3182ce;
+  border: 1px solid var(--sky-blue);
+}
+
+.editBtn:hover {
+  background: var(--sky-blue);
+  color: #fff;
+}
+
+.deleteBtn {
+  background: #fff5f5;
+  color: var(--red);
+  border: 1px solid #feb2b2;
+}
+
+
 .deleteBtn:hover {
-  background: #e53e3e;
+  background: var(--red);
   color: #ffffff;
 }
 

@@ -1,5 +1,6 @@
 :root {
   --error: #e7195a;
+  --light-violet: #BC96E6;
 }
 
 .signup,
@@ -9,28 +10,24 @@
   padding: 32px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 0.7rem
 }
 
-.signup h3, 
-.login h3 {
+.title {
   font-size: 1.5rem;
   text-align: center;
 }
 
-.signup label, 
-.login label {
+label {
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: -10px;
 }
 
-.signup input, 
-.signup select,
-.login input {
+.input {
   padding: 12px 16px;
   border: 1.5px solid #e5e7eb;
   font-size: 1rem;
@@ -43,6 +40,26 @@
   cursor: pointer;
 }
 
+.button {
+  background: linear-gradient(135deg, var(--light-violet) 0%, #8b5cf6 100%);
+  border: 0;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  width: fit-content;
+  align-self: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(139, 92, 246, 0.3);
+}
+
+.button:hover {
+  filter: brightness(1.1); 
+  transform: translateY(-1px); 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
 .error {
   padding: 10px;
   background: #ffefef;
@@ -50,8 +67,4 @@
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
-}
-
-input.error {
-  border: 1px solid var(--error);
 }

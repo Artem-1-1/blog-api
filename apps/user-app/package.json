@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@blog-api/packages": "*",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "@blog-api/packages": "*"
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",

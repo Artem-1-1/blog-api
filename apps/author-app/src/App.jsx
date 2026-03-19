@@ -5,6 +5,7 @@ import CreatePost from "./pages/CreatePost/CreatePost";
 import Drafts from './pages/Drafts/Drafts';
 import Navbar from './components/Navbar/Navbar';
 import { Login, Signup, useAuthContext, PostPage } from "@blog-api/packages";
+import EditPost from './pages/EditPost';
 
 function App() {
   const { user } = useAuthContext()
@@ -31,6 +32,9 @@ function App() {
            path='/post/:id'
            element={user ? <PostPage /> : <Navigate to="/login"/>}
           />
+          <Route 
+          path="/edit/:id"
+          element={user ? <EditPost /> : <Navigate to="/login"/>} />
           <Route
            path='/login'
            element={!user ? <Login /> : <Navigate to="/"/>}

@@ -2,16 +2,16 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { usePostsContext } from "../../hooks/usePostsContext"
 import { useAuthContext } from "@blog-api/packages"
-import style from "./postFrom.module.css"
+import styles from "./postFrom.module.css"
 
-const PostForm = () => {
+const PostForm = ({ initialData = null, isEditing = false }) => {
   const { dispatch } = usePostsContext()
   const { user } = useAuthContext()
   const navigate = useNavigate()
 
-  const [title, setTitle] = useState('');
-  const [postContent, setPostContent] = useState('');
-  const [isPublished, setIsPublished] = useState(false);
+  const [title, setTitle] = useState(initialData?.title || '');
+  const [postContent, setPostContent] = useState(initialData?.postContent || '');
+  const [isPublished, setIsPublished] = useState(initialData?.isPublished || false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -27,8 +27,14 @@ const PostForm = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("http://localhost:3000/api/posts/new", {
-    method: "POST", 
+    const url = isEditing 
+      ? `http://localhost:3000/api/posts/${initialData.id}` 
+      : "http://localhost:3000/api/posts/new";
+
+    const method = isEditing ? "PATCH" : "POST";
+
+    const response = await fetch(url, {
+    method: method, 
     body: JSON.stringify({ title, postContent, isPublished }),
     headers: {
       "Content-Type": "application/json",
@@ -45,17 +51,21 @@ const PostForm = () => {
     setTitle('')
     setPostContent('')
     setIsPublished(false)
-    dispatch({type: 'CREATE_POST', payload: json})
-    navigate('/')
+    dispatch({ type: isEditing ? 'UPDATE_POST' : 'CREATE_POST', payload: json });
+    if (!isPublished) {
+    navigate('/drafts');
+  } else {
+    navigate('/');
+  }
   }
 }
 
   return (
-    <form className={style.form} onSubmit={handleSubmit}> 
+    <form className={styles.form} onSubmit={handleSubmit}> 
       <label htmlFor="post-title">Post Title:</label>
         <input
         id="post-title"
-        className={style.input} 
+        className={styles.input} 
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
@@ -64,14 +74,14 @@ const PostForm = () => {
       <label htmlFor="post-content">Post Content:</label>
         <textarea
         id="post-content"
-        className={style.textarea}
+        className={styles.textarea}
         onChange={(e) => setPostContent(e.target.value)}
         value={postContent} 
         required/>
 
       <div className={style.statusWrapper}>
         <label>Published</label>
-        <div className={style['checkbox-row']}>
+        <div className={styles['checkbox-row']}>
           <input 
             id="published"
             type="checkbox"
@@ -84,9 +94,10 @@ const PostForm = () => {
         </div>
       </div> 
 
-      <button className={style.button} disabled={isLoading}>
-        {isLoading ? 'Sending...' : 'Submit Post'}</button>
-      {error && <div className={style.error}>{error}</div>}
+      <button className={styles.button} disabled={isLoading}>
+        {isEditing ? 'Save Changes' : 'Submit Post'}
+      </button>
+      {error && <div className={styles.error}>{error}</div>}
     </form>
   )
 }

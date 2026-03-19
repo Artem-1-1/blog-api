@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "types": "./index.d.ts",
-  "type": "module", 
+  "type": "module",
   "peerDependencies": {
     "react": "^19.2.0"
   }

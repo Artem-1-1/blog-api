@@ -3,6 +3,7 @@ import { useLogin } from "../hooks/useLogin"
 import styles from "../styles/form.module.css"
 
 export const Login = () => {
+  console.log(styles)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
@@ -15,22 +16,26 @@ export const Login = () => {
 
   return (
     <form className={styles.login} onSubmit={handleSubmit}>
-      <h3>Log In</h3>
+      <h3 className={styles.title}>Log In</h3>
 
-      <label>Username</label>
-      <input type="text"
+      <label className={styles.label}>Username</label>
+      <input
+      className={styles.input} 
+      type="text"
       onChange={(e) => setUsername(e.target.value)}
       value={username}
       required />
 
-      <label>Password</label>
-      <input type="password" 
+      <label className={styles.label}>Password</label>
+      <input
+      className={styles.input}  
+      type="password" 
       onChange={(e) => setPassword(e.target.value)}
       value={password}
       required />
 
-      <button disabled={isLoading}>Log in</button>
-      {error && <div className="error">{error}</div>}
+      <button className={styles.button} disabled={isLoading}>Log in</button>
+      {error && <div className={styles.error}>{error}</div>}
     </form>
   )
 }

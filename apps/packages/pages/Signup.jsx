@@ -28,33 +28,41 @@ export const Signup = () => {
 
   return (
     <form className={styles.signup} onSubmit={handleSubmit}>
-      <h3>Sign Up</h3>
+      <h3 className={styles.title}>Sign Up</h3>
 
-      <label>Username</label>
-      <input type="text"
+      <label className={styles.label}>Username</label>
+      <input 
+      className={styles.input}
+      type="text"
       onChange={(e) => setUsername(e.target.value)}
       value={username}
       required />
 
-      <label>Password</label>
-      <input type="password"
+      <label className={styles.label}>Password</label>
+      <input
+      className={styles.input} 
+      type="password"
       onChange={(e) => setPassword(e.target.value)}
       value={password}
       required />
 
-      <label>Confirm Password</label>
-      <input type="password"
+      <label className={styles.label}>Confirm Password</label>
+      <input
+      className={styles.input}  
+      type="password"
       onChange={(e) => setConfirmPassword(e.target.value)}
       value={confirmPassword}
       required />
 
-      <label>Role</label>
-      <select value={role} onChange={handleChange}>
+      <label className={styles.label}>Role</label>
+      <select
+      className={styles.input} 
+        value={role} onChange={handleChange}>
         <option value="User">User</option>
         <option value="Author">Author</option>
       </select>
 
-      <button disabled={isLoading}>Sign Up</button>
+      <button className={styles.button} disabled={isLoading}>Sign Up</button>
       {(validationError || error) && (
         <div className={styles.error}>{validationError || error}</div>
       )}
