@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import style from "./postPage.module.css"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import { CommentForm } from "../../components/CommentForm/CommentForm"
+import { CommentItem } from "../../components/CommentItem/CommentItem";
+import { commentService } from "../../services/commentService.js"
 
 
 export const PostPage = () => {
@@ -27,21 +29,35 @@ export const PostPage = () => {
           setError("Post not found.");
         }
       } catch (err) {
-        setError(err);
+        setError("Something went wrong. Please try again later.");
       }
     };
 
     fetchPost();
-  }, [id, user]);
+  }, [id, user.token]);
 
   if (error) return <div className={style.error}>{error}</div>;
   if (!post) return <div className={style.loading}>Loading...</div>;
 
   const handleNewComment = (newComment) => {
-    setPost(prev => ({
-      ...prev,
-      comments: [newComment, ...prev.comments]
-    }));
+    const commentWithUser = { ...newComment, user: { username: user.username } };
+    setPost(prev => ({ ...prev, comments: [commentWithUser, ...prev.comments] }));
+  };
+
+  const handleDelete = async (commentId) => {
+    if (!window.confirm("Delete?")) return;
+    if (await commentService.delete(commentId, user.token)) {
+      setPost(prev => ({ ...prev, comments: prev.comments.filter(c => c.id !== commentId) }));
+    }
+  };
+
+  const handleUpdate = async (commentId, newText) => {
+    if (await commentService.update(commentId, newText, user)) {
+      setPost(prev => ({
+        ...prev,
+        comments: prev.comments.map(c => c.id === commentId ? { ...c, commentText: newText } : c)
+      }));
+    }
   };
 
   return (
@@ -55,26 +71,20 @@ export const PostPage = () => {
 
       <section className={style.commentsSection}>
         <h3>Comments ({post.comments?.length || 0})</h3>
-
+        {post.comments?.length === 0 && <p>No comments yet.</p>}
         {user?.role === 'USER' && (
-          <CommentForm 
-            postId={id} 
-            user={user} 
-            onCommentAdded={handleNewComment} 
-          />
+          <CommentForm postId={id} user={user} onCommentAdded={handleNewComment} />
         )}
         
-        {post.comments?.map((comment) => (
-          <div key={comment.id} className={style.commentItem}>
-            <strong>{comment.user?.username}</strong>
-            <span className={style.commentDate}>
-              {new Date(comment.createdAt).toLocaleTimeString()}
-            </span>
-            <p>{comment.commentText}</p>
-          </div>
+      {post.comments?.map((comment) => (
+        <CommentItem 
+          key={comment.id} 
+          comment={comment} 
+          currentUser={user}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
+        />
         ))}
-        
-        {post.comments?.length === 0 && <p>No comments yet.</p>}
       </section>
     </div>
   );

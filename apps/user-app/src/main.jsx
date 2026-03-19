@@ -2,13 +2,16 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import { PostsContextProvider } from '../../author-app/src/context/postContext.jsx'
 import { AuthContextProvider } from "@blog-api/packages"
 
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
     <AuthContextProvider>
-      <App />
+      <PostsContextProvider>
+        <App />
+      </PostsContextProvider>
     </AuthContextProvider>
   </StrictMode>,
 )

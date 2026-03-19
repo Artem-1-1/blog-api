@@ -42,7 +42,7 @@ export const CommentForm = ({ postId, user, onCommentAdded }) => {
         required
       />
       <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Отправка..." : "Отправить"}
+        {isSubmitting ? "Sending..." : "Send"}
       </button>
     </form>
   );
