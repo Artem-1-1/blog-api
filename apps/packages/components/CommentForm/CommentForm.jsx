@@ -36,12 +36,13 @@ export const CommentForm = ({ postId, user, onCommentAdded }) => {
   return (
     <form className={style.commentForm} onSubmit={handleSubmit}>
       <textarea
+      className={style.textarea}
         placeholder="Write Comment..."
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         required
       />
-      <button type="submit" disabled={isSubmitting}>
+      <button className={style.button} type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send"}
       </button>
     </form>

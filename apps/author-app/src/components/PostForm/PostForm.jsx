@@ -79,7 +79,7 @@ const PostForm = ({ initialData = null, isEditing = false }) => {
         value={postContent} 
         required/>
 
-      <div className={style.statusWrapper}>
+      <div className={styles.statusWrapper}>
         <label>Published</label>
         <div className={styles['checkbox-row']}>
           <input 
@@ -88,7 +88,7 @@ const PostForm = ({ initialData = null, isEditing = false }) => {
             checked={isPublished}
             onChange={(e) => setIsPublished(e.target.checked)} 
           />
-          <label htmlFor="published" className={style['checkbox-label']}>
+          <label htmlFor="published" className={styles['checkbox-label']}>
             {isPublished ? "Public" : "Draft"}
           </label>
         </div>
